@@ -15,6 +15,6 @@ app.use(bodyParser.json()); //Convertir los datos http a JSON
 
 //carga de rutas base
 app.get('/pruebas', function(req, res){
-    res.status(200).send({message: 'Bienvenido al Mitify'})
+    res.status(200).send({message: 'Bienvenido a Mitify'})
 });
 module.exports = app;
