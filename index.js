@@ -10,7 +10,8 @@ mongoose.connect('mongodb://localhost:27017/curso_mean2', (err, res) =>{
     console.log("La conexion a la base de datos, funciona");
 
     app.listen(port, function(){
-      console.log("Servidor del api rest de musica escuchando en http://localhost:", +port);
+      console.log("Servidor del api rest de musica que se puede escuchar en http://localhost:", +port);
     })
   }
 });
+
