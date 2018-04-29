@@ -1,5 +1,5 @@
 'use strict'
-var bcrypt = require('bcrpt-nodejs');
+var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/user');
 
 function pruebas(req, res){
