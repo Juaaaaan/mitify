@@ -1,6 +1,7 @@
 'use strict'
 
 var express = require('express');
+//Cuando hacemos una acción por post, bodyParser automaticamente te lo convierte a JSON
 var bodyParser = require('body-parser');
 
 var app = express();
