@@ -27,5 +27,4 @@ exports.createToken = function(user){
     };
 //Le pasamos secret que es una clave secreta para hacer el hash
     return jwt.encode(payload, secret);
-
 };

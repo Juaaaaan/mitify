@@ -1,6 +1,7 @@
 'use strict'
 var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/user');
+var jwt = require('../services/jwt');
 
 function pruebas(req, res){
     res.status(200).send({
@@ -89,7 +90,9 @@ function loginUser(req, res){
                         if(params.gethash){
                             //devolver un token de JWT y un midelware para comprobar que el token es correcto en cada petición
                             //Respuesta http con los datos codificados dentro de ese token
-
+                            res.status(200).send({
+                                token: jwt.createToken(user)
+                            });
                         }else{
                             res.status(200).send({user});
                         }
