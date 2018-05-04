@@ -1,7 +1,13 @@
 'use strict'
+
+var fs = require('fs');
+//fs es el modulo filesystem
+var path = require('path');
+//Path para acceder a rutas concretas
 var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/user');
 var jwt = require('../services/jwt');
+
 
 function pruebas(req, res){
     res.status(200).send({
@@ -170,11 +176,33 @@ function uploadImage(req, res){
 }
 
 
+//Metodo para que nos devuelva un fichero de imagen, es decir: le pasaremos el nombre de un fichero y nos lo devuelva directamente
+    //Nos haga una response (res) una respuesta http con el fichero tal cual, en este caso, una imagen
+    //Esto se hace para securizar lo ficheros del servidor porque siempre voy a pasar por un metodo de la api
+    //Y no vamos a saber la ruta de la imagen. Se accederá a bajo nivel y estará protegido con autentificación
+    //
+    //Para esto, tenemos que importar primeramente los modulos fs y path
+
+    function getImageFile(req, res){
+        var imageFile = req.params.image_file;
+        var path_file = './uploads/users/' + imageFile;
+        //Compruebo si existe un fichero en el servidor
+        fs.exists(path_file, function(exists){
+            if (exists) {
+                res.sendFile(path_file);
+            }else{
+                res.status(404).send({message: 'No existe la imagen...'});
+            }
+        });
+
+    }
+
 //Para que funcione, hay que exportarlo. 
 module.exports = {
     pruebas,
     saveUser,
     loginUser,
     updateUser,
-    uploadImage
+    uploadImage, 
+    getImageFile
 };
