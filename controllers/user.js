@@ -105,9 +105,76 @@ function loginUser(req, res){
     });
 }
 
+
+//Metodo para el controlador de usuario que sirva para actualizar sus datos
+function updateUser(req, res){
+    //Nos llega una variable por la URL
+    var userId = req.params.id;
+    //Conseguir el body del post/put por http put. Que nos llegue los datos actualizados
+    var update = req.body;
+
+    User.findByIdAndUpdate(userId, update, (err, userUpdated)=>{
+        if(err){
+            res.status(500).send({message:'Error al actualizar el usaurio'})   
+        }else{
+            if(userUpdated){
+                res.status(404).send({message:'No se ha podido actualizar el usuario'})   
+            }else{
+                res.status(404).send({user: userUpdated});
+            }
+        }
+    });
+}
+
+//Metodo para subir ficheros
+
+function uploadImage(req, res){
+    var userId = req.params.id;
+    var file_name = 'No subido...';
+
+    //Con el connect-multiparty podemos utilizar las variables superglobales files.
+        //Comprobaremos si viene algo por files
+    if(req.files){
+        //En caso de que el usuario haya subido una imagen
+        var file_name = req.file.image.path;
+        //La url de la imagen, nos sale todo el directorio entero, por tanto tenemos que recortar la url:
+        //Con el metodo SPLIT 
+        var file_split = file_path.file.split('\\');
+        //Recojo el nombre que este en la posición número 2
+        var file_name = file_split[2];
+
+        //Si yo quiero sacar la extensión de la imagen:
+        var ext_split = file.name.path('\.');
+        //Recojo la extensión (.png, .jpg...)
+        var file_ext = ext_split[1];
+
+        //Compruebo que la imagen tiene la extensión correcta
+        if(file_ext == 'png' || file_ext =='jpg' || file_ext == 'gif'){
+            //Hago un Find & Update para actualizar la imagen del usuario
+            User.findByIdAndUpdate(userId, {image:file_name}, (err, userUpdated) =>{
+                if(!userUpdated){
+                    res.status(404).send({message: 'Se ha podido actualizar el usuario'});
+                }else{
+                    res.status(200).send({user: userUpdated});
+                }
+            });
+        }else{
+            res.status(404).send({message: 'Extensión del archivo no válida'});
+        }
+
+        console.log(file_split);
+    }else{
+        //Si el usuario no ha subido ninguna imagen
+        res.status(404).send({message: 'No has subido ninguna imagen'});
+    }
+}
+
+
 //Para que funcione, hay que exportarlo. 
 module.exports = {
     pruebas,
     saveUser,
-    loginUser
+    loginUser,
+    updateUser,
+    uploadImage
 };
