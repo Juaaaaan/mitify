@@ -1,9 +1,8 @@
 'use strict'
-
-var fs = require('fs');
 //fs es el modulo filesystem
-var path = require('path');
+var fs = require('fs');
 //Path para acceder a rutas concretas
+var path = require('path');
 var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/user');
 var jwt = require('../services/jwt');
