@@ -7,7 +7,8 @@ var api = express.Router();
 //Cargamos el middleware de autentificación
 var md_auth = require('../middlewares/autenticated');
 
-api.get('/artist', md_auth.ensureAuth, ArtistController.getArtist);
+api.get('/artist:id', md_auth.ensureAuth, ArtistController.getArtist);
+api.post('/artist', md_auth.ensureAuth, ArtistController.saveArtist);
 
 //Y exportamos los metodos del api
 module.exports = api;
