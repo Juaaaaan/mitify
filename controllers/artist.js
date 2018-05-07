@@ -55,6 +55,24 @@ function getArtists(req, res){
     });
 }
 
+//Actualizar artista
+function updateArtist(req, res){
+    var artistId = req.params.id;
+    //Nos llegan los datos por Post, en el body de la petición por put
+    var update = req.body;
+
+    Artist.findByIdAndUpdate(artistId, update, (err, artistUpdated) => {
+        if(err){
+            res.status(500).send({message: 'Error al guardar el artista'});
+        }else{
+            if(!artistUpdated){
+                res.status(404).send({message: 'El artista no ha sido actualizado'});
+            }else{
+                res.status(500).send({artist: artistUpdated});
+            }
+        }
+    });
+}
 
 
 //Guardar artista
@@ -84,6 +102,7 @@ function saveArtist(req, res){
 module.exports = {
     getArtist,
     saveArtist, 
-    getArtists
+    getArtists,
+    updateArtist
 };
 

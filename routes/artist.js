@@ -11,6 +11,7 @@ api.get('/artist:id', md_auth.ensureAuth, ArtistController.getArtist);
 api.post('/artist', md_auth.ensureAuth, ArtistController.saveArtist);
 //le pongo la interrogación porque puede que venga o puede que no venga
 api.get('/artist/:page?', md_auth.ensureAuth, ArtistController.getArtists);
+api.put('/artist/:id', md_auth.ensureAuth, ArtistController.updateArtist);
 
 //Y exportamos los metodos del api
 module.exports = api;
